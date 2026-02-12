@@ -794,7 +794,8 @@
         <!-- Card de vídeo -->
         <section class="video-card">
             <div class="video-container">
-                <video controls autoplay muted loop>
+                <!-- SOM ATIVADO: removido o atributo muted -->
+                <video controls autoplay loop>
                     <source src="vdr.mp4" type="video/mp4">
                     Seu navegador não suporta vídeo HTML5. Aqui está um <a href="video/nosso_video.mp4">link para o vídeo</a>
                 </video>
@@ -809,6 +810,13 @@
     </div>
 
     <script>
+        // ============================================
+        // CÓDIGO CORRIGIDO - SEM GLITCHES DE ANIMAÇÃO
+        // ============================================
+
+        // Variáveis globais para cleanup
+        let particleInterval, notificationInterval, soundWaveInterval;
+
         // Função para rolar até o vídeo
         function scrollToVideo() {
             const videoCard = document.querySelector('.video-card');
@@ -817,10 +825,8 @@
                 block: 'center'
             });
             
-            // Criar efeito especial
             createHeartExplosion();
             
-            // Mudar cor de fundo temporariamente
             document.body.style.background = 'linear-gradient(135deg, #ff0040, #990026, #000000, #ff1744)';
             document.body.style.backgroundSize = '400% 400%';
             document.body.style.animation = 'gradient-shift 2s ease infinite';
@@ -830,7 +836,6 @@
                 document.body.style.animation = '';
             }, 3000);
             
-            // Mostrar mensagem especial
             const specialMessage = document.getElementById('specialMessage');
             if (specialMessage) {
                 setTimeout(() => {
@@ -838,28 +843,29 @@
                 }, 1000);
             }
             
-            // Vibrar se suportado
             if (navigator.vibrate) {
                 navigator.vibrate([200, 100, 200, 100, 200]);
             }
         }
 
-        // Função para mover o botão "Não"
+        // ✅ CORRIGIDO: Botão "Não" - preserva transforms existentes
         function moveNoButton() {
             const noButton = document.querySelector('.answer-btn.no');
-            const container = document.querySelector('.button-container');
             
-            // Alternar posição
+            // Salva o transform atual (se houver)
+            const currentTransform = noButton.style.transform || '';
+            
+            // Alternar ordem
             if (noButton.style.order === '-1') {
                 noButton.style.order = '2';
             } else {
                 noButton.style.order = '-1';
             }
             
-            // Adicionar animação
-            noButton.style.transform = 'translateY(-5px)';
+            // Adiciona animação sem remover transforms existentes
+            noButton.style.transform = currentTransform + ' translateY(-5px)';
             setTimeout(() => {
-                noButton.style.transform = 'translateY(0)';
+                noButton.style.transform = currentTransform + ' translateY(0)';
             }, 300);
         }
 
@@ -870,16 +876,45 @@
             cursor.style.left = e.clientX - 10 + 'px';
             cursor.style.top = e.clientY - 10 + 'px';
             
-            // Criar trilha do cursor
             if (Math.random() > 0.8) {
                 let trail = document.createElement('div');
                 trail.className = 'cursor-trail';
                 trail.style.left = e.clientX - 3 + 'px';
                 trail.style.top = e.clientY - 3 + 'px';
                 document.body.appendChild(trail);
-                
                 setTimeout(() => trail.remove(), 1000);
             }
+        });
+
+        // ✅ CORRIGIDO: Efeito parallax 3D - SEM ACÚMULO
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.love-card, .question-card, .video-card');
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            cards.forEach((card, index) => {
+                const speed = (index + 1) * 0.02;
+                const x = (mouseX - 0.5) * 15 * speed;
+                const y = (mouseY - 0.5) * 15 * speed;
+                
+                // ✅ CORREÇÃO: SUBSTITUI o transform, não ADICIONA
+                card.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            });
+        });
+
+        // ✅ CORRIGIDO: Efeito de scroll - SEM ACÚMULO
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.3;
+            
+            document.querySelector('.wave-bg').style.transform = `translateY(${rate}px) scale(1.1)`;
+            
+            // ✅ CORREÇÃO: Parallax das partículas - SUBSTITUI, não ADICIONA
+            const particles = document.querySelectorAll('.particle');
+            particles.forEach((particle, index) => {
+                const speed = (index % 3 + 1) * 0.1;
+                particle.style.transform = `translateY(${scrolled * speed}px)`;
+            });
         });
 
         // Partículas vermelhas
@@ -902,26 +937,18 @@
             setTimeout(() => particle.remove(), 10000);
         }
 
-        // Criar partículas continuamente
-        setInterval(createParticle, 300);
-
         // Função principal da surpresa
         function showSurprise() {
             const message = document.getElementById('specialMessage');
             message.classList.add('show');
             
-            // Explosão de corações vermelhos
             createHeartExplosion();
-            
-            // NOVA FUNÇÃO: Animação épica "TE AMO"
             createTeAmoAnimation();
             
-            // Vibração
             if (navigator.vibrate) {
                 navigator.vibrate([200, 100, 200, 100, 300]);
             }
             
-            // Mudança temporária da cor de fundo
             document.body.style.background = 'linear-gradient(135deg, #ff0040, #990026, #000000, #ff1744)';
             document.body.style.backgroundSize = '400% 400%';
             document.body.style.animation = 'gradient-shift 2s ease infinite';
@@ -931,15 +958,13 @@
                 document.body.style.animation = '';
             }, 4000);
             
-            // Criar mais partículas especiais
             for (let i = 0; i < 50; i++) {
                 setTimeout(() => createParticle(), i * 50);
             }
         }
 
-        // NOVA FUNÇÃO: Animação épica "TE AMO"
+        // Animação épica "TE AMO"
         function createTeAmoAnimation() {
-            // Criar múltiplas animações "TE AMO"
             const teAmoTexts = [
                 'TE AMO ❤️',
                 '💖 TE AMO MUITO 💖',
@@ -951,7 +976,6 @@
                 '🥰 TE AMO DEMAIS 🥰'
             ];
             
-            // Animação central principal
             const mainTeAmo = document.createElement('div');
             mainTeAmo.innerHTML = 'TE AMO ❤️';
             mainTeAmo.style.cssText = `
@@ -975,7 +999,6 @@
             document.body.appendChild(mainTeAmo);
             setTimeout(() => mainTeAmo.remove(), 4000);
 
-            // Múltiplos "TE AMO" flutuantes
             for (let i = 0; i < 8; i++) {
                 setTimeout(() => {
                     const teAmo = document.createElement('div');
@@ -1003,7 +1026,6 @@
                 }, i * 200);
             }
 
-            // Chuva de "TE AMO" pequenos
             for (let i = 0; i < 15; i++) {
                 setTimeout(() => {
                     const miniTeAmo = document.createElement('div');
@@ -1024,7 +1046,6 @@
                 }, i * 150);
             }
 
-            // Efeito de pulso na tela
             const pulseOverlay = document.createElement('div');
             pulseOverlay.style.cssText = `
                 position: fixed;
@@ -1041,7 +1062,7 @@
             setTimeout(() => pulseOverlay.remove(), 2000);
         }
 
-        // Explosão de corações vermelhos
+        // Explosão de corações
         function createHeartExplosion() {
             const hearts = ['❤️', '💖', '💕', '💗', '💓', '💝', '♥️', '💘'];
             
@@ -1054,7 +1075,6 @@
                     heart.style.top = Math.random() * window.innerHeight + 'px';
                     heart.style.color = Math.random() > 0.5 ? '#ff0040' : '#ffd700';
                     document.body.appendChild(heart);
-                    
                     setTimeout(() => heart.remove(), 2000);
                 }, i * 100);
             }
@@ -1069,11 +1089,9 @@
             clearTimeout(clickTimer);
             
             if (clickCount === 3) {
-                // Ativação do modo ultra dark
                 document.body.style.filter = 'hue-rotate(30deg) saturate(1.8) brightness(1.2)';
                 createHeartExplosion();
                 
-                // Criar texto flutuante
                 const text = document.createElement('div');
                 text.innerHTML = '🔥 MODO DARK ULTRA ATIVADO! 🔥';
                 text.style.cssText = `
@@ -1106,7 +1124,6 @@
                 }, 1000);
             }
             
-            // Efeito de clique vermelho
             const ripple = document.createElement('div');
             ripple.style.cssText = `
                 position: fixed;
@@ -1125,37 +1142,7 @@
             setTimeout(() => ripple.remove(), 800);
         });
 
-        // Efeito parallax 3D no mouse
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.love-card, .question-card, .video-card');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
-            
-            cards.forEach((card, index) => {
-                const speed = (index + 1) * 0.02;
-                const x = (mouseX - 0.5) * 15 * speed;
-                const y = (mouseY - 0.5) * 15 * speed;
-                
-                card.style.transform += ` translate3d(${x}px, ${y}px, 0)`;
-            });
-        });
-
-        // Efeito de scroll suave
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.3;
-            
-            document.querySelector('.wave-bg').style.transform = `translateY(${rate}px) scale(1.1)`;
-            
-            // Parallax das partículas
-            const particles = document.querySelectorAll('.particle');
-            particles.forEach((particle, index) => {
-                const speed = (index % 3 + 1) * 0.1;
-                particle.style.transform += ` translateY(${scrolled * speed}px)`;
-            });
-        });
-
-        // Sistema de notificações românticas dark
+        // Sistema de notificações românticas
         const romanticMessages = [
             "💖 Você é meu mundo inteiro!",
             "🌹 Cada dia com você é especial!",
@@ -1192,10 +1179,7 @@
             setTimeout(() => notification.remove(), 4000);
         }
 
-        // Mostrar notificações aleatórias
-        setInterval(showNotification, 18000);
-
-        // Sistema de música ambiente visual (dark theme)
+        // Sistema de música ambiente visual
         function createSoundWave() {
             const wave = document.createElement('div');
             wave.style.cssText = `
@@ -1213,7 +1197,6 @@
             
             const container = document.querySelector('.sound-visualizer') || createSoundContainer();
             container.appendChild(wave);
-            
             setTimeout(() => wave.remove(), 1000);
         }
 
@@ -1233,10 +1216,7 @@
             return container;
         }
 
-        // Ativar visualizador de som
-        setInterval(createSoundWave, 150);
-
-        // Sistema de conquistas (easter eggs)
+        // Sistema de conquistas
         let achievements = {
             firstClick: false,
             tripleClick: false,
@@ -1244,7 +1224,6 @@
             allPhotosHovered: false
         };
 
-        // Detectar hover longo
         let hoverTimer;
         document.querySelector('.love-card').addEventListener('mouseenter', () => {
             hoverTimer = setTimeout(() => {
@@ -1286,7 +1265,7 @@
             setTimeout(() => achievement.remove(), 3000);
         }
 
-        // Observador de interseção para animações
+        // Observador de interseção
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -1300,13 +1279,23 @@
             });
         }, observerOptions);
 
-        // Inicialização quando a página carrega
+        // ✅ CORRIGIDO: Cleanup e inicialização adequada
         document.addEventListener('DOMContentLoaded', () => {
-            // Observar elementos para animação
+            // Limpar intervals existentes (se houver)
+            if (particleInterval) clearInterval(particleInterval);
+            if (notificationInterval) clearInterval(notificationInterval);
+            if (soundWaveInterval) clearInterval(soundWaveInterval);
+            
+            // Iniciar intervals
+            particleInterval = setInterval(createParticle, 300);
+            notificationInterval = setInterval(showNotification, 18000);
+            soundWaveInterval = setInterval(createSoundWave, 150);
+            
+            // Observar elementos
             const elements = document.querySelectorAll('.question-card, .video-card, .special-message');
             elements.forEach(el => observer.observe(el));
             
-            // Criar partículas iniciais
+            // Partículas iniciais
             for (let i = 0; i < 15; i++) {
                 setTimeout(() => createParticle(), i * 300);
             }
@@ -1314,7 +1303,7 @@
             // Primeira notificação
             setTimeout(showNotification, 5000);
             
-            // Efeito de entrada suave
+            // Efeito de entrada
             document.body.style.opacity = '0';
             setTimeout(() => {
                 document.body.style.transition = 'opacity 1s ease';
@@ -1322,7 +1311,14 @@
             }, 100);
         });
 
-        // Adicionar CSS para animações extras
+        // ✅ CORRIGIDO: Cleanup ao sair da página
+        window.addEventListener('beforeunload', () => {
+            clearInterval(particleInterval);
+            clearInterval(notificationInterval);
+            clearInterval(soundWaveInterval);
+        });
+
+        // Estilos extras
         const extraStyles = document.createElement('style');
         extraStyles.textContent = `
             @keyframes ultra-text {
@@ -1461,10 +1457,29 @@
             .animate-in {
                 animation: slideUp 0.8s ease-out forwards;
             }
+            
+            @keyframes achievement-popup {
+                0% { 
+                    opacity: 0; 
+                    transform: translate(-50%, -50%) scale(0.5); 
+                }
+                20% { 
+                    opacity: 1; 
+                    transform: translate(-50%, -50%) scale(1.1); 
+                }
+                80% { 
+                    opacity: 1; 
+                    transform: translate(-50%, -50%) scale(1); 
+                }
+                100% { 
+                    opacity: 0; 
+                    transform: translate(-50%, -50%) scale(0.8); 
+                }
+            }
         `;
         document.head.appendChild(extraStyles);
 
-        console.log('💖 Site de Amor carregado com sucesso! Feliz Dia dos Namorados! ✨');
+        console.log('💖 Site de Amor carregado com sucesso! GLITCHES CORRIGIDOS! ✨');
     </script>
 </body>
 </html>
