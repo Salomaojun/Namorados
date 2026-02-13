@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Para Minha Princesa ❤️</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
@@ -18,17 +18,19 @@
             --gold: #ffd700;
             --silver: #c0c0c0;
             --white: #ffffff;
-            --glass-bg: rgba(17, 17, 17, 0.8);
-            --glass-border: rgba(255, 0, 64, 0.3);
+            --rose-pink: #ff69b4;
+            --rose-red: #e63946;
+            --rose-gold: #ffb7c5;
             
             /* Variável para o nome - MUDE AQUI! */
-            --girlfriend-name: "Charmilia"; /* ← COLOQUE O NOME AQUI */
+            --girlfriend-name: "Charmilia";
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -37,10 +39,24 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
-            cursor: none;
         }
 
-        /* Cursor personalizado dark */
+        /* Cursor só desktop */
+        @media (min-width: 1024px) {
+            body {
+                cursor: none;
+            }
+            .custom-cursor, .cursor-trail {
+                display: block;
+            }
+        }
+
+        @media (max-width: 1023px) {
+            .custom-cursor, .cursor-trail {
+                display: none !important;
+            }
+        }
+
         .custom-cursor {
             position: fixed;
             width: 20px;
@@ -54,14 +70,157 @@
             border: 2px solid var(--neon-red);
         }
 
-        .cursor-trail {
+        /* ======================================== */
+        /* ESTILOS DOS BUQUÊS DE ROSAS */
+        /* ======================================== */
+        
+        .rose-bouquet {
             position: fixed;
-            width: 6px;
-            height: 6px;
-            background: rgba(255, 0, 64, 0.6);
-            border-radius: 50%;
             pointer-events: none;
-            z-index: 9998;
+            z-index: 9995;
+            animation: floatBouquet 8s ease-in-out forwards;
+            filter: drop-shadow(0 0 15px rgba(255, 105, 180, 0.6));
+        }
+
+        .rose {
+            display: inline-block;
+            font-size: 2.5rem;
+            animation: petalGlow 3s ease-in-out infinite alternate;
+        }
+
+        .rose-leaf {
+            display: inline-block;
+            font-size: 2rem;
+            margin-left: -5px;
+            animation: leafSway 4s ease-in-out infinite alternate;
+        }
+
+        .bouquet-text {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            white-space: nowrap;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 5px 15px;
+            border-radius: 30px;
+            border: 1px solid var(--rose-pink);
+            backdrop-filter: blur(5px);
+        }
+
+        /* ROSAS ESPALHADAS PELA TELA */
+        .scattered-rose {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9994;
+            font-size: 1.8rem;
+            animation: floatRose 10s linear infinite;
+            filter: drop-shadow(0 0 8px rgba(230, 57, 70, 0.7));
+        }
+
+        /* CHUVA DE PÉTALAS */
+        .petal {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9993;
+            font-size: 1.2rem;
+            animation: petalRain 6s linear forwards;
+            opacity: 0.8;
+        }
+
+        /* CORAÇÕES E ROSAS COMBINADOS */
+        .heart-rose {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9995;
+            font-size: 2.2rem;
+            animation: heartRoseFloat 7s ease-in-out forwards;
+            filter: drop-shadow(0 0 12px rgba(255, 0, 64, 0.8));
+        }
+
+        /* ANIMAÇÕES DAS ROSAS */
+        @keyframes floatBouquet {
+            0% {
+                transform: translateY(100vh) scale(0.3) rotate(-10deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-20vh) scale(0.8) rotate(10deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatRose {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(80vh) rotate(45deg) scale(1);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(20vh) rotate(180deg) scale(1.2);
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        @keyframes petalRain {
+            0% {
+                transform: translateY(-10vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(20vh) rotate(45deg) scale(1);
+            }
+            100% {
+                transform: translateY(110vh) rotate(180deg) scale(0.6);
+                opacity: 0;
+            }
+        }
+
+        @keyframes heartRoseFloat {
+            0% {
+                transform: translateY(100vh) scale(0.2) rotate(-20deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(70vh) scale(1) rotate(0deg);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(20vh) scale(1.3) rotate(20deg);
+            }
+            100% {
+                transform: translateY(-20vh) scale(0.6) rotate(40deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes petalGlow {
+            0% { filter: drop-shadow(0 0 5px var(--rose-pink)); }
+            100% { filter: drop-shadow(0 0 20px var(--rose-red)) drop-shadow(0 0 30px var(--gold)); }
+        }
+
+        @keyframes leafSway {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(15deg); }
         }
 
         /* Partículas vermelhas */
@@ -86,12 +245,11 @@
 
         @keyframes float-particle {
             0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
             100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Efeito de ondas dark */
         .wave-bg {
             position: fixed;
             top: 0;
@@ -102,8 +260,13 @@
                 radial-gradient(circle at 20% 50%, rgba(255, 0, 64, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(204, 0, 51, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 40% 80%, rgba(153, 0, 38, 0.1) 0%, transparent 50%);
-            animation: wave-move 10s ease-in-out infinite;
             z-index: 2;
+        }
+
+        @media (min-width: 1024px) {
+            .wave-bg {
+                animation: wave-move 10s ease-in-out infinite;
+            }
         }
 
         @keyframes wave-move {
@@ -120,7 +283,7 @@
             z-index: 10;
         }
 
-        /* Header dark theme */
+        /* Header */
         .header {
             text-align: center;
             margin-bottom: 60px;
@@ -149,7 +312,7 @@
         .header h1 {
             font-size: 4.5rem;
             font-weight: 800;
-            background: linear-gradient(45deg, var(--accent-red), var(--gold), var(--neon-red), var(--silver));
+            background: linear-gradient(45deg, var(--accent-red), var(--gold), var(--neon-red), var(--rose-pink));
             background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -188,63 +351,22 @@
             content: var(--girlfriend-name);
         }
 
-        /* Card principal dark theme melhorado */
+        /* Cards */
         .love-card {
             background: linear-gradient(135deg, 
-                rgba(17, 17, 17, 0.95) 0%, 
-                rgba(26, 26, 26, 0.9) 50%, 
-                rgba(17, 17, 17, 0.95) 100%);
-            backdrop-filter: blur(30px);
+                #111111 0%, 
+                #1a1a1a 50%, 
+                #111111 100%);
             border-radius: 25px;
             padding: 50px 40px;
             margin: 40px 0;
             box-shadow: 
                 0 20px 60px rgba(0, 0, 0, 0.8),
-                inset 0 1px 0 rgba(255, 0, 64, 0.3),
-                0 0 40px rgba(255, 0, 64, 0.15),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+                0 0 40px rgba(255, 0, 64, 0.15);
             border: 1px solid rgba(255, 0, 64, 0.4);
-            animation: card-float 8s ease-in-out infinite;
             text-align: center;
             position: relative;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .love-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.9),
-                inset 0 1px 0 rgba(255, 0, 64, 0.4),
-                0 0 60px rgba(255, 0, 64, 0.25),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 0, 64, 0.6);
-        }
-
-        @keyframes card-float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .love-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, 
-                rgba(255, 0, 64, 0.1) 0%, 
-                transparent 30%, 
-                transparent 70%, 
-                rgba(255, 0, 64, 0.1) 100%);
-            border-radius: 25px;
-            z-index: -1;
-            animation: subtle-glow 6s ease-in-out infinite alternate;
-        }
-
-        @keyframes subtle-glow {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.6; }
+            transition: all 0.3s ease;
         }
 
         .love-card h2 {
@@ -255,12 +377,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 40px;
-            animation: title-shine 2s ease-in-out infinite;
-        }
-
-        @keyframes title-shine {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.3); }
         }
 
         .love-message {
@@ -270,15 +386,9 @@
             margin-bottom: 50px;
             font-weight: 300;
             letter-spacing: 0.5px;
-            animation: message-glow 4s ease-in-out infinite alternate;
         }
 
-        @keyframes message-glow {
-            0% { text-shadow: 0 0 10px rgba(192, 192, 192, 0.3); }
-            100% { text-shadow: 0 0 20px rgba(192, 192, 192, 0.6), 0 0 30px rgba(255, 0, 64, 0.2); }
-        }
-
-        /* Botão dark theme */
+        /* Botão */
         .surprise-btn {
             background: linear-gradient(45deg, var(--accent-red), var(--deep-red));
             color: var(--white);
@@ -290,12 +400,9 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: all 0.3s ease;
             margin: 40px 0;
-            box-shadow: 
-                0 15px 35px rgba(255, 0, 64, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            animation: btn-pulse 3s ease-in-out infinite;
+            box-shadow: 0 15px 35px rgba(255, 0, 64, 0.4);
             border: 2px solid var(--neon-red);
         }
 
@@ -314,48 +421,20 @@
             left: 100%;
         }
 
-        .surprise-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 
-                0 25px 50px rgba(255, 0, 64, 0.6),
-                0 0 30px var(--gold);
-        }
-
-        @keyframes btn-pulse {
-            0%, 100% { box-shadow: 0 15px 35px rgba(255, 0, 64, 0.4); }
-            50% { box-shadow: 0 15px 35px rgba(255, 0, 64, 0.6), 0 0 20px var(--gold); }
-        }
-
-        /* Card de pergunta */
+        /* Card pergunta */
         .question-card {
             background: linear-gradient(135deg, 
-                rgba(17, 17, 17, 0.95) 0%, 
-                rgba(26, 26, 26, 0.9) 50%, 
-                rgba(17, 17, 17, 0.95) 100%);
-            backdrop-filter: blur(30px);
+                #111111 0%, 
+                #1a1a1a 50%, 
+                #111111 100%);
             border-radius: 25px;
             padding: 50px 40px;
             margin: 40px 0;
             box-shadow: 
                 0 20px 60px rgba(0, 0, 0, 0.8),
-                inset 0 1px 0 rgba(255, 0, 64, 0.3),
-                0 0 40px rgba(255, 0, 64, 0.15),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+                0 0 40px rgba(255, 0, 64, 0.15);
             border: 1px solid rgba(255, 0, 64, 0.4);
-            animation: card-float 8s ease-in-out infinite;
             text-align: center;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .question-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.9),
-                inset 0 1px 0 rgba(255, 0, 64, 0.4),
-                0 0 60px rgba(255, 0, 64, 0.25),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 0, 64, 0.6);
         }
 
         .question-card h3 {
@@ -366,7 +445,6 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 40px;
-            animation: title-shine 2s ease-in-out infinite;
         }
 
         .button-container {
@@ -387,34 +465,10 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-            box-shadow: 
-                0 10px 30px rgba(255, 0, 64, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 0, 64, 0.4);
             border: 2px solid var(--neon-red);
             min-width: 150px;
-        }
-
-        .answer-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.3), transparent);
-            transition: left 0.5s;
-        }
-
-        .answer-btn:hover::before {
-            left: 100%;
-        }
-
-        .answer-btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 
-                0 20px 40px rgba(255, 0, 64, 0.6),
-                0 0 25px var(--gold);
         }
 
         .answer-btn.no {
@@ -422,42 +476,20 @@
             border: 2px solid #999;
         }
 
-        .answer-btn.no:hover {
-            box-shadow: 
-                0 20px 40px rgba(100, 100, 100, 0.6),
-                0 0 25px var(--silver);
-        }
-
         /* Vídeo card */
         .video-card {
             background: linear-gradient(135deg, 
-                rgba(17, 17, 17, 0.95) 0%, 
-                rgba(26, 26, 26, 0.9) 50%, 
-                rgba(17, 17, 17, 0.95) 100%);
-            backdrop-filter: blur(30px);
+                #111111 0%, 
+                #1a1a1a 50%, 
+                #111111 100%);
             border-radius: 25px;
             padding: 40px;
             margin: 40px 0;
             box-shadow: 
                 0 20px 60px rgba(0, 0, 0, 0.8),
-                inset 0 1px 0 rgba(255, 0, 64, 0.3),
-                0 0 40px rgba(255, 0, 64, 0.15),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+                0 0 40px rgba(255, 0, 64, 0.15);
             border: 1px solid rgba(255, 0, 64, 0.4);
-            animation: card-float 8s ease-in-out infinite;
             text-align: center;
-            position: relative;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .video-card:hover {
-            transform: translateY(-5px) scale(1.01);
-            box-shadow: 
-                0 30px 80px rgba(0, 0, 0, 0.9),
-                inset 0 1px 0 rgba(255, 0, 64, 0.4),
-                0 0 60px rgba(255, 0, 64, 0.25),
-                inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 0, 64, 0.6);
         }
 
         .video-container {
@@ -474,14 +506,13 @@
             display: block;
         }
 
-        /* Mensagem especial dark theme */
+        /* Mensagem especial */
         .special-message {
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
+            background: #111111;
             border-radius: 25px;
             padding: 50px;
             margin: 60px 0;
-            border: 2px solid var(--glass-border);
+            border: 2px solid rgba(255, 0, 64, 0.3);
             opacity: 0;
             transform: translateY(50px) scale(0.9);
             transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -489,32 +520,10 @@
             overflow: hidden;
         }
 
-        .special-message::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 0, 64, 0.1), 
-                rgba(255, 215, 0, 0.1), 
-                transparent);
-            animation: message-wave 4s ease-in-out infinite;
-        }
-
-        @keyframes message-wave {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
         .special-message.show {
             opacity: 1;
             transform: translateY(0) scale(1);
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.7),
-                0 0 40px rgba(255, 0, 64, 0.2);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
         }
 
         .special-message h3 {
@@ -526,12 +535,6 @@
             font-weight: 700;
             margin-bottom: 30px;
             text-align: center;
-            animation: special-glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes special-glow {
-            0% { filter: brightness(1); }
-            100% { filter: brightness(1.3) drop-shadow(0 0 10px var(--accent-red)); }
         }
 
         .special-message p {
@@ -542,7 +545,7 @@
             font-weight: 300;
         }
 
-        /* Footer dark theme */
+        /* Footer */
         .footer {
             text-align: center;
             padding: 60px 0;
@@ -584,31 +587,7 @@
             75% { transform: scale(1.2) rotate(3deg); }
         }
 
-        /* Efeitos de explosão dark */
-        .heart-explosion {
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999;
-            font-size: 2rem;
-            animation: heart-explode 2s ease-out forwards;
-        }
-
-        @keyframes heart-explode {
-            0% { 
-                transform: scale(0) rotate(0deg); 
-                opacity: 1; 
-            }
-            50% { 
-                transform: scale(1.5) rotate(180deg); 
-                opacity: 1; 
-            }
-            100% { 
-                transform: scale(0.5) rotate(360deg); 
-                opacity: 0; 
-            }
-        }
-
-        /* Loading dark theme */
+        /* Loading */
         .loading-overlay {
             position: fixed;
             top: 0;
@@ -639,93 +618,108 @@
             to { opacity: 0; visibility: hidden; }
         }
 
-        /* Responsivo melhorado - Mobile First */
-        @media (max-width: 480px) {
-            .header h1 { 
-                font-size: 2.8rem; 
-                margin-bottom: 15px;
+        /* ======================================== */
+        /* RESPONSIVO - CELULAR */
+        /* ======================================== */
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.8rem;
             }
-            .header p { 
-                font-size: 1.1rem; 
+            
+            .header p {
+                font-size: 1.1rem;
+                animation: none;
             }
-            .love-card { 
-                padding: 30px 20px; 
-                margin: 30px 0;
-                border-radius: 20px;
+            
+            .love-card {
+                padding: 30px 20px;
             }
-            .love-card h2 { 
-                font-size: 2.2rem; 
-                margin-bottom: 25px;
+            
+            .love-card h2 {
+                font-size: 2.2rem;
             }
-            .love-message { 
-                font-size: 1.1rem; 
-                margin-bottom: 30px;
+            
+            .love-message {
+                font-size: 1.1rem;
             }
-            .surprise-btn {
-                padding: 18px 35px;
-                font-size: 1.2rem;
-            }
+            
             .question-card {
                 padding: 30px 20px;
-                border-radius: 20px;
             }
+            
             .question-card h3 {
                 font-size: 1.8rem;
             }
+            
             .button-container {
                 flex-direction: column;
                 gap: 15px;
             }
+            
             .answer-btn {
+                width: 100%;
+                max-width: 300px;
+                margin: 0 auto;
                 padding: 15px 30px;
                 font-size: 1.1rem;
-                min-width: auto;
             }
+            
+            .surprise-btn {
+                padding: 18px 35px;
+                font-size: 1.2rem;
+            }
+            
             .video-card {
                 padding: 20px;
-                border-radius: 20px;
             }
+            
             .special-message {
                 padding: 30px 20px;
-                border-radius: 20px;
             }
+            
             .special-message h3 {
                 font-size: 2rem;
             }
+            
             .special-message p {
                 font-size: 1.1rem;
             }
+            
+            .footer {
+                font-size: 1rem;
+                padding: 40px 0;
+            }
+            
+            .footer::before {
+                width: 200px;
+            }
+            
+            /* Ajustar rosas no celular */
+            .rose {
+                font-size: 2rem;
+            }
+            
+            .scattered-rose {
+                font-size: 1.5rem;
+            }
+            
+            .heart-rose {
+                font-size: 1.8rem;
+            }
         }
 
-        @media (min-width: 481px) and (max-width: 768px) {
+        @media (max-width: 480px) {
             .header h1 { 
-                font-size: 3.5rem; 
+                font-size: 2.2rem; 
             }
-            .love-card { 
-                padding: 50px 35px; 
-            }
+            
             .love-card h2 { 
-                font-size: 2.8rem; 
+                font-size: 1.8rem; 
             }
+            
             .question-card h3 {
-                font-size: 2.2rem;
-            }
-        }
-
-        @media (min-width: 769px) and (max-width: 1024px) {
-            .photo-gallery { 
-                grid-template-columns: repeat(3, 1fr);
-                gap: 25px; 
-            }
-        }
-
-        @media (min-width: 1025px) {
-            .photo-gallery { 
-                grid-template-columns: repeat(3, 1fr);
-                gap: 30px; 
-                max-width: 900px;
-                margin-left: auto;
-                margin-right: auto;
+                font-size: 1.5rem;
             }
         }
 
@@ -739,6 +733,10 @@
             from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        .animate-in {
+            animation: slideUp 0.8s ease-out forwards;
+        }
     </style>
 </head>
 <body>
@@ -751,7 +749,7 @@
     <div class="custom-cursor"></div>
 
     <!-- Partículas de fundo -->
-    <div class="particles"></div>
+    <div class="particles" id="particles"></div>
     
     <!-- Efeito de ondas -->
     <div class="wave-bg"></div>
@@ -778,7 +776,7 @@
                 <h3>💖 Do Fundo Do Meu Coração 💖</h3>
                 <p><span class="girlfriend-name"></span>, você é o presente mais lindo que a vida me deu. Cada sorriso seu ilumina meu mundo, cada abraço seu me faz sentir em casa, cada "eu te amo" seu é música para minha alma.</p>
                 <br>
-                <p>Obrigado(a) por ser minha companheira de sonhos, minha parceira de vida, minha melhor amiga e meu grande amor. Neste Dia dos Namorados, quero que saiba: você é tudo que sempre sonhei e muito mais! 💝</p>
+                <p>Obrigado por ser minha companheira de sonhos, minha parceira de vida, minha melhor amiga e meu grande amor. Neste Dia dos Namorados, quero que saiba: você é tudo que sempre sonhei e muito mais! 💝</p>
             </div>
         </main>
 
@@ -794,10 +792,9 @@
         <!-- Card de vídeo -->
         <section class="video-card">
             <div class="video-container">
-                <!-- SOM ATIVADO: removido o atributo muted -->
                 <video controls autoplay loop>
                     <source src="vdr.mp4" type="video/mp4">
-                    Seu navegador não suporta vídeo HTML5. Aqui está um <a href="video/nosso_video.mp4">link para o vídeo</a>
+                    Seu navegador não suporta vídeo HTML5.
                 </video>
             </div>
         </section>
@@ -811,11 +808,14 @@
 
     <script>
         // ============================================
-        // CÓDIGO CORRIGIDO - SEM GLITCHES DE ANIMAÇÃO
+        // CÓDIGO COM BUQUÊS DE ROSAS E CORAÇÕES
         // ============================================
 
-        // Variáveis globais para cleanup
-        let particleInterval, notificationInterval, soundWaveInterval;
+        let particleInterval;
+        let roseInterval;
+        let scatteredRoseInterval;
+        let petalInterval;
+        let heartRoseInterval;
 
         // Função para rolar até o vídeo
         function scrollToVideo() {
@@ -825,16 +825,7 @@
                 block: 'center'
             });
             
-            createHeartExplosion();
-            
-            document.body.style.background = 'linear-gradient(135deg, #ff0040, #990026, #000000, #ff1744)';
-            document.body.style.backgroundSize = '400% 400%';
-            document.body.style.animation = 'gradient-shift 2s ease infinite';
-            
-            setTimeout(() => {
-                document.body.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a0a0a 100%)';
-                document.body.style.animation = '';
-            }, 3000);
+            createRoseExplosion(); // 🌹🌹🌹 EXPLOSÃO DE ROSAS!
             
             const specialMessage = document.getElementById('specialMessage');
             if (specialMessage) {
@@ -844,97 +835,198 @@
             }
             
             if (navigator.vibrate) {
-                navigator.vibrate([200, 100, 200, 100, 200]);
+                navigator.vibrate(200);
             }
         }
 
-        // ✅ CORRIGIDO: Botão "Não" - preserva transforms existentes
+        // Botão "Não"
         function moveNoButton() {
             const noButton = document.querySelector('.answer-btn.no');
             
-            // Salva o transform atual (se houver)
-            const currentTransform = noButton.style.transform || '';
-            
-            // Alternar ordem
             if (noButton.style.order === '-1') {
                 noButton.style.order = '2';
             } else {
                 noButton.style.order = '-1';
             }
             
-            // Adiciona animação sem remover transforms existentes
-            noButton.style.transform = currentTransform + ' translateY(-5px)';
+            noButton.style.transform = 'translateY(-5px)';
             setTimeout(() => {
-                noButton.style.transform = currentTransform + ' translateY(0)';
-            }, 300);
+                noButton.style.transform = 'translateY(0)';
+            }, 200);
         }
 
-        // Cursor personalizado
-        let cursor = document.querySelector('.custom-cursor');
-        
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX - 10 + 'px';
-            cursor.style.top = e.clientY - 10 + 'px';
+        // ============================================
+        // FUNÇÕES DOS BUQUÊS DE ROSAS 🌹🌹🌹
+        // ============================================
+
+        // 1. BUQUÊ COMPLETO DE ROSAS
+        function createRoseBouquet() {
+            const bouquet = document.createElement('div');
+            bouquet.className = 'rose-bouquet';
             
-            if (Math.random() > 0.8) {
-                let trail = document.createElement('div');
-                trail.className = 'cursor-trail';
-                trail.style.left = e.clientX - 3 + 'px';
-                trail.style.top = e.clientY - 3 + 'px';
-                document.body.appendChild(trail);
-                setTimeout(() => trail.remove(), 1000);
+            // Posição aleatória
+            bouquet.style.left = Math.random() * 80 + 10 + '%';
+            bouquet.style.bottom = '-50px';
+            
+            // Escolher tipo de buquê
+            const bouquetType = Math.floor(Math.random() * 5);
+            
+            if (bouquetType === 0) {
+                // Buquê vermelho
+                bouquet.innerHTML = `
+                    <span class="rose">🌹</span>
+                    <span class="rose">🌹</span>
+                    <span class="rose">🌹</span>
+                    <span class="rose-leaf">🌿</span>
+                    <div class="bouquet-text">Para você ❤️</div>
+                `;
+            } else if (bouquetType === 1) {
+                // Buquê de rosas coloridas
+                bouquet.innerHTML = `
+                    <span class="rose">🌹</span>
+                    <span style="color: #ff69b4; font-size: 2.5rem;">🥀</span>
+                    <span class="rose">🌹</span>
+                    <span class="rose-leaf">🌿</span>
+                    <span class="rose-leaf">🌿</span>
+                    <div class="bouquet-text">Meu amor 🌹</div>
+                `;
+            } else if (bouquetType === 2) {
+                // Buquê com coração
+                bouquet.innerHTML = `
+                    <span style="font-size: 3rem;">💝</span>
+                    <span class="rose">🌹</span>
+                    <span class="rose">🌹</span>
+                    <span class="rose-leaf">🌿</span>
+                    <div class="bouquet-text">Te amo! 💖</div>
+                `;
+            } else if (bouquetType === 3) {
+                // Buquê dourado
+                bouquet.innerHTML = `
+                    <span style="color: #ffd700; font-size: 2.5rem;">🌹</span>
+                    <span style="color: #ffd700; font-size: 2.5rem;">🌹</span>
+                    <span style="color: #ff69b4; font-size: 2.5rem;">🌹</span>
+                    <span class="rose-leaf">🌿</span>
+                    <div class="bouquet-text">Minha princesa 👑</div>
+                `;
+            } else {
+                // Buquê especial
+                bouquet.innerHTML = `
+                    <span class="rose">🌹</span>
+                    <span style="font-size: 2.5rem;">❤️</span>
+                    <span class="rose">🌹</span>
+                    <span style="font-size: 2.5rem;">💕</span>
+                    <span class="rose">🌹</span>
+                    <span class="rose-leaf">🌿</span>
+                    <div class="bouquet-text">${document.querySelector('.girlfriend-name').innerHTML || 'Charmilia'} ❤️</div>
+                `;
             }
-        });
+            
+            document.body.appendChild(bouquet);
+            setTimeout(() => bouquet.remove(), 8000);
+        }
 
-        // ✅ CORRIGIDO: Efeito parallax 3D - SEM ACÚMULO
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.love-card, .question-card, .video-card');
-            const mouseX = e.clientX / window.innerWidth;
-            const mouseY = e.clientY / window.innerHeight;
+        // 2. ROSAS ESPALHADAS PELA TELA
+        function createScatteredRose() {
+            const rose = document.createElement('div');
+            rose.className = 'scattered-rose';
             
-            cards.forEach((card, index) => {
-                const speed = (index + 1) * 0.02;
-                const x = (mouseX - 0.5) * 15 * speed;
-                const y = (mouseY - 0.5) * 15 * speed;
-                
-                // ✅ CORREÇÃO: SUBSTITUI o transform, não ADICIONA
-                card.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-            });
-        });
+            const roses = ['🌹', '🥀', '🌹', '🌹', '🌷', '🌸', '🌺'];
+            rose.innerHTML = roses[Math.floor(Math.random() * roses.length)];
+            
+            rose.style.left = Math.random() * 100 + '%';
+            rose.style.animationDelay = Math.random() * 2 + 's';
+            rose.style.animationDuration = (Math.random() * 8 + 6) + 's';
+            rose.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+            
+            // Cores diferentes
+            if (Math.random() > 0.5) {
+                rose.style.color = '#ff0040';
+            } else {
+                rose.style.color = '#ff69b4';
+            }
+            
+            document.body.appendChild(rose);
+            setTimeout(() => rose.remove(), 12000);
+        }
 
-        // ✅ CORRIGIDO: Efeito de scroll - SEM ACÚMULO
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.3;
+        // 3. CHUVA DE PÉTALAS
+        function createPetal() {
+            const petal = document.createElement('div');
+            petal.className = 'petal';
             
-            document.querySelector('.wave-bg').style.transform = `translateY(${rate}px) scale(1.1)`;
+            const petals = ['🌸', '🌼', '🌷', '🌹', '🥀', '🌸'];
+            petal.innerHTML = petals[Math.floor(Math.random() * petals.length)];
             
-            // ✅ CORREÇÃO: Parallax das partículas - SUBSTITUI, não ADICIONA
-            const particles = document.querySelectorAll('.particle');
-            particles.forEach((particle, index) => {
-                const speed = (index % 3 + 1) * 0.1;
-                particle.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-        });
+            petal.style.left = Math.random() * 100 + '%';
+            petal.style.animationDelay = Math.random() * 3 + 's';
+            petal.style.animationDuration = (Math.random() * 4 + 4) + 's';
+            petal.style.fontSize = (Math.random() * 1 + 1) + 'rem';
+            petal.style.opacity = Math.random() * 0.5 + 0.3;
+            
+            document.body.appendChild(petal);
+            setTimeout(() => petal.remove(), 8000);
+        }
+
+        // 4. CORAÇÃO COM ROSAS
+        function createHeartRose() {
+            const heartRose = document.createElement('div');
+            heartRose.className = 'heart-rose';
+            
+            const items = ['💖🌹', '🌹❤️', '💝🌹', '🌹💕', '❤️🌹❤️', '🌹💖🌹'];
+            heartRose.innerHTML = items[Math.floor(Math.random() * items.length)];
+            
+            heartRose.style.left = Math.random() * 90 + 5 + '%';
+            heartRose.style.animationDuration = (Math.random() * 4 + 5) + 's';
+            heartRose.style.fontSize = (Math.random() * 1 + 2) + 'rem';
+            
+            document.body.appendChild(heartRose);
+            setTimeout(() => heartRose.remove(), 7000);
+        }
+
+        // 5. EXPLOSÃO DE ROSAS (quando clica no SIM)
+        function createRoseExplosion() {
+            const count = window.innerWidth < 768 ? 20 : 40;
+            
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    if (i < 5) {
+                        // Buquês grandes
+                        createRoseBouquet();
+                    } else if (i < 15) {
+                        // Corações com rosas
+                        createHeartRose();
+                    } else {
+                        // Rosas individuais
+                        const rose = document.createElement('div');
+                        rose.className = 'scattered-rose';
+                        rose.innerHTML = '🌹';
+                        rose.style.left = Math.random() * 100 + '%';
+                        rose.style.top = Math.random() * 100 + '%';
+                        rose.style.animation = 'heartRoseFloat 3s ease-out forwards';
+                        rose.style.fontSize = (Math.random() * 2 + 2) + 'rem';
+                        rose.style.color = Math.random() > 0.5 ? '#ff0040' : '#ff69b4';
+                        rose.style.filter = 'drop-shadow(0 0 15px rgba(255, 0, 64, 0.8))';
+                        document.body.appendChild(rose);
+                        setTimeout(() => rose.remove(), 3000);
+                    }
+                }, i * 70);
+            }
+        }
 
         // Partículas vermelhas
         function createParticle() {
+            const particles = document.querySelector('.particles');
+            if (!particles) return;
+            
             const particle = document.createElement('div');
             particle.className = 'particle';
             particle.style.left = Math.random() * 100 + '%';
             particle.style.animationDuration = (Math.random() * 6 + 4) + 's';
             particle.style.animationDelay = Math.random() * 2 + 's';
+            particle.style.background = `radial-gradient(circle, rgba(255, 0, 64, 0.6), transparent)`;
             
-            const redColors = [
-                'rgba(255, 0, 64, 0.8)', 
-                'rgba(204, 0, 51, 0.8)', 
-                'rgba(255, 215, 0, 0.6)', 
-                'rgba(255, 255, 255, 0.4)'
-            ];
-            particle.style.background = `radial-gradient(circle, ${redColors[Math.floor(Math.random() * redColors.length)]}, transparent)`;
-            
-            document.querySelector('.particles').appendChild(particle);
-            setTimeout(() => particle.remove(), 10000);
+            particles.appendChild(particle);
+            setTimeout(() => particle.remove(), 8000);
         }
 
         // Função principal da surpresa
@@ -942,544 +1034,120 @@
             const message = document.getElementById('specialMessage');
             message.classList.add('show');
             
-            createHeartExplosion();
-            createTeAmoAnimation();
-            
-            if (navigator.vibrate) {
-                navigator.vibrate([200, 100, 200, 100, 300]);
-            }
-            
-            document.body.style.background = 'linear-gradient(135deg, #ff0040, #990026, #000000, #ff1744)';
-            document.body.style.backgroundSize = '400% 400%';
-            document.body.style.animation = 'gradient-shift 2s ease infinite';
-            
-            setTimeout(() => {
-                document.body.style.background = 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a0a0a 100%)';
-                document.body.style.animation = '';
-            }, 4000);
-            
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => createParticle(), i * 50);
-            }
-        }
-
-        // Animação épica "TE AMO"
-        function createTeAmoAnimation() {
-            const teAmoTexts = [
-                'TE AMO ❤️',
-                '💖 TE AMO MUITO 💖',
-                'EU TE AMO!',
-                '❤️ MEU AMOR ❤️',
-                'TE AMO PARA SEMPRE!',
-                '💕 VOCÊ É TUDO 💕',
-                'MEU CORAÇÃO É SEU!',
-                '🥰 TE AMO DEMAIS 🥰'
-            ];
-            
-            const mainTeAmo = document.createElement('div');
-            mainTeAmo.innerHTML = 'TE AMO ❤️';
-            mainTeAmo.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                font-size: 4rem;
-                font-weight: bold;
-                background: linear-gradient(45deg, #ff0040, #ffd700, #ff0040);
-                background-size: 200% 200%;
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-                background-clip: text;
-                z-index: 9999;
-                pointer-events: none;
-                animation: te-amo-main 4s ease-out forwards;
-                text-shadow: 0 0 30px rgba(255, 0, 64, 0.8);
-                filter: drop-shadow(0 0 20px rgba(255, 0, 64, 1));
-            `;
-            document.body.appendChild(mainTeAmo);
-            setTimeout(() => mainTeAmo.remove(), 4000);
-
-            for (let i = 0; i < 8; i++) {
-                setTimeout(() => {
-                    const teAmo = document.createElement('div');
-                    const randomText = teAmoTexts[Math.floor(Math.random() * teAmoTexts.length)];
-                    teAmo.innerHTML = randomText;
-                    
-                    const startX = Math.random() * window.innerWidth;
-                    const startY = Math.random() * window.innerHeight;
-                    
-                    teAmo.style.cssText = `
-                        position: fixed;
-                        left: ${startX}px;
-                        top: ${startY}px;
-                        font-size: ${Math.random() * 2 + 1.5}rem;
-                        font-weight: bold;
-                        color: ${Math.random() > 0.5 ? '#ff0040' : '#ffd700'};
-                        z-index: 9998;
-                        pointer-events: none;
-                        animation: te-amo-float 3s ease-out forwards;
-                        text-shadow: 0 0 15px rgba(255, 0, 64, 0.8);
-                        filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
-                    `;
-                    document.body.appendChild(teAmo);
-                    setTimeout(() => teAmo.remove(), 3000);
-                }, i * 200);
-            }
-
+            // 🌹🌹🌹 MUITAS ROSAS! 🌹🌹🌹
             for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    const miniTeAmo = document.createElement('div');
-                    miniTeAmo.innerHTML = '💖 TE AMO';
-                    miniTeAmo.style.cssText = `
-                        position: fixed;
-                        left: ${Math.random() * 100}%;
-                        top: -50px;
-                        font-size: 1.2rem;
-                        color: #ff0040;
-                        z-index: 9997;
-                        pointer-events: none;
-                        animation: te-amo-rain ${Math.random() * 3 + 2}s linear forwards;
-                        text-shadow: 0 0 10px rgba(255, 0, 64, 0.6);
-                    `;
-                    document.body.appendChild(miniTeAmo);
-                    setTimeout(() => miniTeAmo.remove(), 5000);
-                }, i * 150);
+                setTimeout(() => createRoseBouquet(), i * 150);
             }
-
-            const pulseOverlay = document.createElement('div');
-            pulseOverlay.style.cssText = `
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: radial-gradient(circle, rgba(255, 0, 64, 0.1), transparent);
-                z-index: 9996;
-                pointer-events: none;
-                animation: love-pulse 2s ease-in-out;
-            `;
-            document.body.appendChild(pulseOverlay);
-            setTimeout(() => pulseOverlay.remove(), 2000);
-        }
-
-        // Explosão de corações
-        function createHeartExplosion() {
-            const hearts = ['❤️', '💖', '💕', '💗', '💓', '💝', '♥️', '💘'];
             
             for (let i = 0; i < 30; i++) {
-                setTimeout(() => {
-                    const heart = document.createElement('div');
-                    heart.className = 'heart-explosion';
-                    heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-                    heart.style.left = Math.random() * window.innerWidth + 'px';
-                    heart.style.top = Math.random() * window.innerHeight + 'px';
-                    heart.style.color = Math.random() > 0.5 ? '#ff0040' : '#ffd700';
-                    document.body.appendChild(heart);
-                    setTimeout(() => heart.remove(), 2000);
-                }, i * 100);
+                setTimeout(() => createHeartRose(), i * 100);
+            }
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => createScatteredRose(), i * 50);
+            }
+            
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 200]);
             }
         }
 
-        // Easter egg: triplo clique
-        let clickCount = 0;
-        let clickTimer;
-        
-        document.addEventListener('click', (e) => {
-            clickCount++;
-            clearTimeout(clickTimer);
-            
-            if (clickCount === 3) {
-                document.body.style.filter = 'hue-rotate(30deg) saturate(1.8) brightness(1.2)';
-                createHeartExplosion();
-                
-                const text = document.createElement('div');
-                text.innerHTML = '🔥 MODO DARK ULTRA ATIVADO! 🔥';
-                text.style.cssText = `
-                    position: fixed;
-                    top: 50%;
-                    left: 50%;
-                    transform: translate(-50%, -50%);
-                    font-size: 3rem;
-                    font-weight: bold;
-                    background: linear-gradient(45deg, #ff0040, #ffd700);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                    z-index: 9999;
-                    pointer-events: none;
-                    animation: ultra-text 3s ease-out forwards;
-                    text-shadow: 0 0 20px rgba(255, 0, 64, 0.8);
-                `;
-                document.body.appendChild(text);
-                
-                setTimeout(() => {
-                    text.remove();
-                    document.body.style.filter = '';
-                }, 3000);
-                
-                clickCount = 0;
-            } else {
-                clickTimer = setTimeout(() => {
-                    clickCount = 0;
-                }, 1000);
-            }
-            
-            const ripple = document.createElement('div');
-            ripple.style.cssText = `
-                position: fixed;
-                left: ${e.clientX - 25}px;
-                top: ${e.clientY - 25}px;
-                width: 50px;
-                height: 50px;
-                border: 2px solid #ff0040;
-                border-radius: 50%;
-                pointer-events: none;
-                z-index: 9999;
-                animation: ripple-effect 0.8s ease-out forwards;
-                box-shadow: 0 0 20px rgba(255, 0, 64, 0.6);
-            `;
-            document.body.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 800);
-        });
-
-        // Sistema de notificações românticas
-        const romanticMessages = [
-            "💖 Você é meu mundo inteiro!",
-            "🌹 Cada dia com você é especial!",
-            "💎 Você é meu tesouro mais precioso!",
-            "✨ Meu coração bate só por você!",
-            "🥰 Te amo mais a cada segundo!",
-            "💕 Você é minha felicidade!",
-            "🌟 Minha estrela mais brilhante!",
-            "💘 Amor da minha vida toda!"
-        ];
-
-        function showNotification() {
-            const notification = document.createElement('div');
-            const message = romanticMessages[Math.floor(Math.random() * romanticMessages.length)];
-            
-            notification.innerHTML = message;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(45deg, #ff0040, #990026);
-                color: white;
-                padding: 15px 25px;
-                border-radius: 25px;
-                font-weight: 600;
-                z-index: 9999;
-                box-shadow: 0 10px 30px rgba(255, 0, 64, 0.4);
-                animation: notification-slide 4s ease-in-out forwards;
-                backdrop-filter: blur(10px);
-                border: 1px solid rgba(255, 0, 64, 0.3);
-            `;
-            
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 4000);
+        // Detectar mobile
+        function isMobile() {
+            return window.innerWidth <= 768;
         }
 
-        // Sistema de música ambiente visual
-        function createSoundWave() {
-            const wave = document.createElement('div');
-            wave.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                left: 20px;
-                width: 4px;
-                height: ${Math.random() * 50 + 10}px;
-                background: linear-gradient(to top, #ff0040, #ffd700);
-                border-radius: 2px;
-                animation: sound-wave 0.5s ease-in-out infinite alternate;
-                margin-right: 2px;
-                box-shadow: 0 0 10px rgba(255, 0, 64, 0.5);
-            `;
-            
-            const container = document.querySelector('.sound-visualizer') || createSoundContainer();
-            container.appendChild(wave);
-            setTimeout(() => wave.remove(), 1000);
-        }
-
-        function createSoundContainer() {
-            const container = document.createElement('div');
-            container.className = 'sound-visualizer';
-            container.style.cssText = `
-                position: fixed;
-                bottom: 20px;
-                left: 20px;
-                display: flex;
-                align-items: end;
-                z-index: 1000;
-                gap: 2px;
-            `;
-            document.body.appendChild(container);
-            return container;
-        }
-
-        // Sistema de conquistas
-        let achievements = {
-            firstClick: false,
-            tripleClick: false,
-            longHover: false,
-            allPhotosHovered: false
-        };
-
-        let hoverTimer;
-        document.querySelector('.love-card').addEventListener('mouseenter', () => {
-            hoverTimer = setTimeout(() => {
-                if (!achievements.longHover) {
-                    achievements.longHover = true;
-                    showAchievement('🏆 Romântico Contemplador!', 'Você admirou a carta por 3 segundos');
-                }
-            }, 3000);
-        });
-
-        document.querySelector('.love-card').addEventListener('mouseleave', () => {
-            clearTimeout(hoverTimer);
-        });
-
-        function showAchievement(title, description) {
-            const achievement = document.createElement('div');
-            achievement.innerHTML = `
-                <div style="font-size: 1.5rem; margin-bottom: 5px;">${title}</div>
-                <div style="font-size: 0.9rem; opacity: 0.8;">${description}</div>
-            `;
-            achievement.style.cssText = `
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: linear-gradient(45deg, #ff0040, #990026);
-                color: white;
-                padding: 20px 30px;
-                border-radius: 15px;
-                text-align: center;
-                z-index: 9999;
-                box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
-                animation: achievement-popup 3s ease-in-out forwards;
-                backdrop-filter: blur(10px);
-                border: 2px solid rgba(255, 0, 64, 0.3);
-            `;
-            
-            document.body.appendChild(achievement);
-            setTimeout(() => achievement.remove(), 3000);
-        }
-
-        // Observador de interseção
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('animate-in');
-                }
-            });
-        }, observerOptions);
-
-        // ✅ CORRIGIDO: Cleanup e inicialização adequada
+        // Inicialização
         document.addEventListener('DOMContentLoaded', () => {
-            // Limpar intervals existentes (se houver)
-            if (particleInterval) clearInterval(particleInterval);
-            if (notificationInterval) clearInterval(notificationInterval);
-            if (soundWaveInterval) clearInterval(soundWaveInterval);
             
-            // Iniciar intervals
-            particleInterval = setInterval(createParticle, 300);
-            notificationInterval = setInterval(showNotification, 18000);
-            soundWaveInterval = setInterval(createSoundWave, 150);
+            // Partículas
+            const particleCount = isMobile() ? 8 : 15;
+            for (let i = 0; i < particleCount; i++) {
+                setTimeout(() => createParticle(), i * 200);
+            }
+            particleInterval = setInterval(createParticle, isMobile() ? 600 : 300);
             
-            // Observar elementos
+            // 🌹 ROSAS CONSTANTES NA TELA 🌹
+            // Buquês a cada 5 segundos
+            roseInterval = setInterval(() => {
+                createRoseBouquet();
+                if (!isMobile()) {
+                    setTimeout(() => createRoseBouquet(), 500); // 2 buquês seguidos no desktop
+                }
+            }, 5000);
+            
+            // Rosas espalhadas a cada 2 segundos
+            scatteredRoseInterval = setInterval(() => {
+                createScatteredRose();
+                if (Math.random() > 0.5) createScatteredRose(); // às vezes 2 de uma vez
+            }, 2000);
+            
+            // Pétalas a cada 3 segundos
+            petalInterval = setInterval(() => {
+                createPetal();
+                createPetal();
+            }, 3000);
+            
+            // Corações com rosas a cada 4 segundos
+            heartRoseInterval = setInterval(() => {
+                createHeartRose();
+                setTimeout(() => createHeartRose(), 500);
+            }, 4000);
+            
+            // Observador de animação
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
             const elements = document.querySelectorAll('.question-card, .video-card, .special-message');
             elements.forEach(el => observer.observe(el));
-            
-            // Partículas iniciais
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => createParticle(), i * 300);
-            }
-            
-            // Primeira notificação
-            setTimeout(showNotification, 5000);
             
             // Efeito de entrada
             document.body.style.opacity = '0';
             setTimeout(() => {
-                document.body.style.transition = 'opacity 1s ease';
+                document.body.style.transition = 'opacity 0.5s ease';
                 document.body.style.opacity = '1';
             }, 100);
         });
 
-        // ✅ CORRIGIDO: Cleanup ao sair da página
+        // Desktop parallax
+        if (!isMobile()) {
+            document.addEventListener('mousemove', (e) => {
+                const cards = document.querySelectorAll('.love-card, .question-card, .video-card');
+                const mouseX = e.clientX / window.innerWidth;
+                const mouseY = e.clientY / window.innerHeight;
+                
+                cards.forEach((card, index) => {
+                    const speed = (index + 1) * 0.02;
+                    const x = (mouseX - 0.5) * 15 * speed;
+                    const y = (mouseY - 0.5) * 15 * speed;
+                    card.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+                });
+            });
+            
+            let cursor = document.querySelector('.custom-cursor');
+            document.addEventListener('mousemove', (e) => {
+                if (cursor) {
+                    cursor.style.left = e.clientX - 10 + 'px';
+                    cursor.style.top = e.clientY - 10 + 'px';
+                }
+            });
+        }
+
+        // Cleanup
         window.addEventListener('beforeunload', () => {
             clearInterval(particleInterval);
-            clearInterval(notificationInterval);
-            clearInterval(soundWaveInterval);
+            clearInterval(roseInterval);
+            clearInterval(scatteredRoseInterval);
+            clearInterval(petalInterval);
+            clearInterval(heartRoseInterval);
         });
 
-        // Estilos extras
-        const extraStyles = document.createElement('style');
-        extraStyles.textContent = `
-            @keyframes ultra-text {
-                0% { 
-                    opacity: 0; 
-                    transform: translate(-50%, -50%) scale(0) rotate(0deg); 
-                }
-                50% { 
-                    opacity: 1; 
-                    transform: translate(-50%, -50%) scale(1.2) rotate(180deg); 
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: translate(-50%, -50%) scale(0) rotate(360deg); 
-                }
-            }
-            
-            @keyframes ripple-effect {
-                0% { 
-                    transform: scale(0); 
-                    opacity: 1; 
-                }
-                100% { 
-                    transform: scale(4); 
-                    opacity: 0; 
-                }
-            }
-            
-            @keyframes notification-slide {
-                0% { 
-                    transform: translateX(100%); 
-                    opacity: 0; 
-                }
-                10%, 90% { 
-                    transform: translateX(0); 
-                    opacity: 1; 
-                }
-                100% { 
-                    transform: translateX(100%); 
-                    opacity: 0; 
-                }
-            }
-            
-            @keyframes sound-wave {
-                0% { height: 10px; }
-                100% { height: 50px; }
-            }
-            
-            @keyframes te-amo-main {
-                0% { 
-                    opacity: 0; 
-                    transform: translate(-50%, -50%) scale(0) rotate(0deg); 
-                    background-position: 0% 50%;
-                }
-                20% { 
-                    opacity: 1; 
-                    transform: translate(-50%, -50%) scale(1.5) rotate(5deg); 
-                    background-position: 100% 50%;
-                }
-                40% { 
-                    transform: translate(-50%, -50%) scale(1.2) rotate(-3deg); 
-                    background-position: 0% 50%;
-                }
-                60% { 
-                    transform: translate(-50%, -50%) scale(1.3) rotate(2deg); 
-                    background-position: 100% 50%;
-                }
-                80% { 
-                    transform: translate(-50%, -50%) scale(1.1) rotate(0deg); 
-                    background-position: 0% 50%;
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: translate(-50%, -50%) scale(0.5) rotate(0deg); 
-                    background-position: 100% 50%;
-                }
-            }
-            
-            @keyframes te-amo-float {
-                0% { 
-                    opacity: 0; 
-                    transform: scale(0) rotate(0deg); 
-                }
-                20% { 
-                    opacity: 1; 
-                    transform: scale(1.2) rotate(10deg); 
-                }
-                50% { 
-                    opacity: 1; 
-                    transform: scale(1) rotate(-5deg) translateY(-20px); 
-                }
-                80% { 
-                    opacity: 1; 
-                    transform: scale(1.1) rotate(5deg) translateY(-40px); 
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: scale(0.5) rotate(0deg) translateY(-60px); 
-                }
-            }
-            
-            @keyframes te-amo-rain {
-                0% { 
-                    opacity: 0; 
-                    transform: translateY(-50px) rotate(0deg) scale(0.8); 
-                }
-                10% { 
-                    opacity: 1; 
-                    transform: translateY(0px) rotate(10deg) scale(1); 
-                }
-                90% { 
-                    opacity: 1; 
-                    transform: translateY(calc(100vh - 100px)) rotate(-10deg) scale(0.9); 
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: translateY(100vh) rotate(0deg) scale(0.5); 
-                }
-            }
-            
-            @keyframes love-pulse {
-                0% { 
-                    opacity: 0; 
-                    transform: scale(0.8); 
-                }
-                50% { 
-                    opacity: 1; 
-                    transform: scale(1.2); 
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: scale(1.5); 
-                }
-            }
-            
-            .animate-in {
-                animation: slideUp 0.8s ease-out forwards;
-            }
-            
-            @keyframes achievement-popup {
-                0% { 
-                    opacity: 0; 
-                    transform: translate(-50%, -50%) scale(0.5); 
-                }
-                20% { 
-                    opacity: 1; 
-                    transform: translate(-50%, -50%) scale(1.1); 
-                }
-                80% { 
-                    opacity: 1; 
-                    transform: translate(-50%, -50%) scale(1); 
-                }
-                100% { 
-                    opacity: 0; 
-                    transform: translate(-50%, -50%) scale(0.8); 
-                }
-            }
-        `;
-        document.head.appendChild(extraStyles);
-
-        console.log('💖 Site de Amor carregado com sucesso! GLITCHES CORRIGIDOS! ✨');
+        console.log('🌹🌹🌹 Site com BUQUÊS DE ROSAS ativado! 🌹🌹🌹');
     </script>
 </body>
 </html>
